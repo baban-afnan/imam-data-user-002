@@ -1,0 +1,152 @@
+/* Dashboard Notification Styles */
+.notification-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.scrolling-text-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.scrolling-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 15s linear infinite;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.scrolling-text-container:hover .scrolling-text {
+    animation-play-state: paused;
+}
+
+/* Service Card Styles */
+.service-card {
+    transition: 0.2s ease;
+    border-radius: 14px !important;
+}
+
+.service-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Perfect grid spacing */
+.service-grid {
+    row-gap: 14px;
+}
+
+/* Mobile Responsive - Reduce service box size */
+@media (max-width: 576px) {
+    .service-card .card-body {
+        padding: 0.7rem !important;
+    }
+
+    .service-card h6 {
+        font-size: 12px !important;
+    }
+
+    .service-card .avatar {
+        padding: 0.4rem !important;
+    }
+
+    .service-card i {
+        font-size: 14px !important;
+    }
+}
+
+/* Enhanced Statistics Card Styles - Gradient Theme */
+.stat-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none !important;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-gradient-purple {
+    background: linear-gradient(135deg, #a855f7 0%, #d8b4fe 100%);
+}
+
+.card-gradient-green {
+    background: linear-gradient(135deg, #10b981 0%, #6ee7b7 100%);
+}
+
+.card-gradient-red {
+    background: linear-gradient(135deg, #ef4444 0%, #fca5a5 100%);
+}
+
+.card-gradient-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #93c5fd 100%);
+}
+
+.stat-icon-glass {
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+}
+
+.stat-card:hover .stat-icon-glass {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.stat-card .card-body {
+    padding: 1.5rem;
+}
+
+.stat-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    /* Dark contrast for the value */
+    letter-spacing: -0.5px;
+}
+
+.stat-icon-glass i {
+    color: white;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
