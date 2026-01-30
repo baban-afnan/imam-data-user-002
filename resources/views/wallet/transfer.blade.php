@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Arewa Smart - Transfer to Smart User</title>
+    <title>Smart Idea - Transfer to Smart User</title>
 
     <div class="page">
         <div class="main-content app-content custom-margin-top">

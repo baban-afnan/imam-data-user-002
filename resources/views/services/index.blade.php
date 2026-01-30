@@ -1,5 +1,5 @@
 <x-app-layout>
-      <title>Arewa Smart - Services Management</title>
+      <title>Smart Idea - Services Management</title>
 
     <div class="content">
         <!-- Page Header -->

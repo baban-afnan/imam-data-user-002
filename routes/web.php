@@ -86,6 +86,80 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::delete('/prices/{price}', [\App\Http\Controllers\Admin\ServiceController::class, 'destroyPrice'])->name('prices.destroy');
     });
 
+    // --- Agency Services Routes (Super Admin) ---
+    Route::middleware(['role:super_admin'])->group(function () {
+        
+        // BVN Modification
+        Route::prefix('bvn-modification')->name('bvnmod.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\BVNmodController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\BVNmodController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\BVNmodController::class, 'update'])->name('update');
+        });
+
+        // BVN User
+
+        // CRM
+        Route::prefix('crm')->name('crm.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\CRMController::class, 'index'])->name('index');
+            Route::get('/export/csv', [\App\Http\Controllers\Agency\CRMController::class, 'exportCsv'])->name('export.csv');
+            Route::get('/export/excel', [\App\Http\Controllers\Agency\CRMController::class, 'exportExcel'])->name('export.excel');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\CRMController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\CRMController::class, 'update'])->name('update');
+        });
+
+        // BVN Search
+        Route::prefix('bvn-search')->name('bvn-search.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\BvnSearchController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\BvnSearchController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\BvnSearchController::class, 'update'])->name('update');
+        });
+
+        // NIN Modification
+        Route::prefix('nin-modification')->name('ninmod.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\NINmodController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\NINmodController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\NINmodController::class, 'update'])->name('update');
+        });
+
+        // NIN IPE
+        Route::prefix('nin-ipe')->name('ninipe.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\NinIpeController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\NinIpeController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\NinIpeController::class, 'update'])->name('update');
+        });
+
+        // NIN Personalisation
+        Route::prefix('nin-personalisation')->name('nin-personalisation.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\NinPersonalisationController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\NinPersonalisationController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\NinPersonalisationController::class, 'update'])->name('update');
+        });
+
+        // Validation
+        Route::prefix('validation')->name('validation.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\ValidationController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\ValidationController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\ValidationController::class, 'update'])->name('update');
+        });
+
+        // BVN Service
+        Route::prefix('bvn-service')->name('bvnservice.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\BVNserviceController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\BVNserviceController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\BVNserviceController::class, 'update'])->name('update');
+        });
+
+
+        // VNIN to NIBSS
+        Route::prefix('vnin-nibss')->name('vnin-nibss.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agency\VninToNibssController::class, 'index'])->name('index');
+            Route::get('/{id}', [\App\Http\Controllers\Agency\VninToNibssController::class, 'show'])->name('show');
+            Route::put('/{id}', [\App\Http\Controllers\Agency\VninToNibssController::class, 'update'])->name('update');
+            Route::post('/', [\App\Http\Controllers\Agency\VninToNibssController::class, 'store'])->name('store');
+        });
+
+    });
+
     // Data Variation Management
     Route::prefix('admin/data-variations')->name('admin.data-variations.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\DataVariationController::class, 'index'])->name('index');

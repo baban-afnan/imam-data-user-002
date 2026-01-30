@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Arewa Smart - Wallet Management</title>
+    <title>Smart Idea - Wallet Management</title>
 
     <div class="content">
         {{-- Alerts --}}

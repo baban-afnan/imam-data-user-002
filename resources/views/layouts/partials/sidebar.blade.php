@@ -69,33 +69,32 @@
                 </li>
 
                 <!-- Agency Services -->
-                <li class="submenu">
+                  <li class="submenu">
                     <a href="javascript:void(0);">
-                        <i class="ti ti-user-check"></i>
-                        <span>Agency Services</span>
+                        <i class="ti ti-credit-card"></i>
+                        <span>BVN Services</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="#">BVN Mod</a></li>
-                        <li><a href="#">NIN Mod</a></li>
-                        <li><a href="#">Validation</a></li>
-                        <li><a href="#">Verification</a></li>
-                        <li><a href="#">CRM</a></li>
-                         <li><a href="#">P/N Search</a></li>
+                        <li><a href="{{ route('bvnmod.index') }}" class="{{ request()->routeIs('bvnmod.*') ? 'active' : '' }}">BVN Modification</a></li>
+                        <li><a href="{{ route('ninmod.index') }}" class="{{ request()->routeIs('ninmod.*') ? 'active' : '' }}">NIN Modification</a></li>
+                        <li><a href="{{ route('validation.index') }}" class="{{ request()->routeIs('validation.*') ? 'active' : '' }}">Validation</a></li>
+                        <li><a href="{{ route('crm.index') }}" class="{{ request()->routeIs('crm.*') ? 'active' : '' }}">CRM</a></li>
+                        <li><a href="{{ route('bvn-search.index') }}" class="{{ request()->routeIs('bvn-search.*') ? 'active' : '' }}">P/N Search</a></li>
                     </ul>
                 </li>
 
                 <!-- Verification -->
-                <li class="submenu">
+                  <li class="submenu">
                     <a href="javascript:void(0);">
-                        <i class="ti ti-fingerprint"></i>
-                        <span>Verification</span>
+                        <i class="ti ti-credit-card"></i>
+                        <span>Other Services</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="#">Verify BVN</a></li>
-                        <li><a href="#">Verify TIN</a></li>
-                        <li><a href="#">Verify NIN</a></li>
+                        <li><a href="{{ route('ninipe.index') }}" class="{{ request()->routeIs('ninipe.*') ? 'active' : '' }}">NIN IPE</a></li>
+                        <li><a href="{{ route('vnin-nibss.index') }}" class="{{ request()->routeIs('vnin-nibss.*') ? 'active' : '' }}">VNIN to NIBSS</a></li>
+                        <li><a href="{{ route('nin-personalisation.index') }}" class="{{ request()->routeIs('nin-personalisation.*') ? 'active' : '' }}">NIN Personalisation</a></li>
                     </ul>
                 </li>
 
@@ -198,13 +197,25 @@
 .sidebar-menu li.active > a,
 .sidebar-menu li a.active {
     background: #0d5c3e !important;
-    color: #ffffff !important;
+    color: #6d2c2cff !important;
     box-shadow: 0 4px 12px rgba(13, 92, 62, 0.15);
 }
 
 .sidebar-menu li.active > a i,
 .sidebar-menu li a.active i {
-    color: #ffffff !important;
+    color: #057c33ff !important;
+}
+
+/* Submenu Active Overrides */
+.sidebar-menu .submenu ul li a.active {
+    background: transparent !important;
+    color: #0d5c3e !important;
+    box-shadow: none !important;
+    font-weight: 700;
+}
+
+.sidebar-menu .submenu ul li a.active:hover {
+    text-decoration: underline;
 }
 
 /* Submenu Styles */
@@ -239,7 +250,7 @@
     padding: 15px 25px 5px 25px;
     font-size: 10px;
     text-transform: uppercase;
-    color: #aaa;
+    color: #851f1fff;
     font-weight: 700;
     letter-spacing: 1px;
 }

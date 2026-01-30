@@ -1,5 +1,5 @@
 <x-app-layout>
-    @section('title', 'Arewa Smart - Fund/Debit User')
+    @section('title', 'Smart Idea - Fund/Debit User')
 
     <div class="content">
         {{-- Success Message --}}
