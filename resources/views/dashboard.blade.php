@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Smart Idea - {{ $title ?? 'Dashboard' }}</title>
+    <title>Imam Data Sub- {{ $title ?? 'Dashboard' }}</title>
 
     <!-- Announcement Banner -->
     @if(isset($announcement) && $announcement)
@@ -63,54 +63,66 @@
         <div class="row g-4 mb-4">
             <!-- Total Wallet Balance (Total Volume) -->
             <div class="col-xl-3 col-lg-6">
-                <div class="card border-0 shadow-sm rounded-4 h-80 stat-card card-gradient-purple">
+                <div class="card border-0 shadow-sm rounded-4 stat-card card-gradient-purple">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <p class="stat-title">Wallet Balance</p>
                                 <h4 class="stat-value">₦{{ number_format($totalWalletBalance, 2) }}</h4>
                             </div>
+                            <div class="icon-container">
+                                <i class="ti ti-wallet"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Monthly Credit -->
+            <!-- Today's Credit -->
             <div class="col-xl-3 col-lg-6">
-                <div class="card border-0 shadow-sm rounded-4 h-80 stat-card card-gradient-green">
+                <div class="card border-0 shadow-sm rounded-4 stat-card card-gradient-green">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <p class="stat-title">Today's Credit</p>
                                 <h4 class="stat-value">₦{{ number_format($dailyCredit, 2) }}</h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Monthly Debit -->
-            <div class="col-xl-3 col-lg-6">
-                <div class="card border-0 shadow-sm rounded-4 h-80 stat-card card-gradient-red">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="stat-title">Today's Debit</p>
-                                <h4 class="stat-value">₦{{ number_format($dailyDebit, 2) }}</h4>
+                            <div class="icon-container">
+                                <i class="ti ti-arrow-down-left"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Total Users (Monthly Users equivalent) -->
+            <!-- Today's Debit -->
             <div class="col-xl-3 col-lg-6">
-                <div class="card border-0 shadow-sm rounded-4 h-80 stat-card card-gradient-blue">
+                <div class="card border-0 shadow-sm rounded-4 stat-card card-gradient-red">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="stat-title">Today's Debit</p>
+                                <h4 class="stat-value">₦{{ number_format($dailyDebit, 2) }}</h4>
+                            </div>
+                            <div class="icon-container">
+                                <i class="ti ti-arrow-up"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Users -->
+            <div class="col-xl-3 col-lg-6">
+                <div class="card border-0 shadow-sm rounded-4 stat-card card-gradient-blue">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <p class="stat-title">Total Users</p>
                                 <h4 class="stat-value">{{ number_format($totalUsers) }}</h4>
+                            </div>
+                            <div class="icon-container">
+                                <i class="ti ti-users"></i>
                             </div>
                         </div>
                     </div>

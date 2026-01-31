@@ -1,5 +1,5 @@
 <x-app-layout>
-   <title>Smart Idea - Vnin to nibss</title>
+   <title>Imam Data Sub - Vnin to nibss</title>
       <div class="page-body">
     <div class="container-fluid">
       <div class="page-title">

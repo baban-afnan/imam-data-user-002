@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Manage Service: {{ $service->name }}</title>
+   <title>Imam Data Sub - Services Management</title>
 
     <div class="content">
         <!-- Page Header -->

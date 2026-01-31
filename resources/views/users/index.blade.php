@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Arewa Smart - User Management</title>
+    <title>Imam Data Sub - User Management</title>
 
     <div class="content">
 

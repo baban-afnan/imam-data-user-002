@@ -15,9 +15,115 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class NINmodController extends Controller
 {
+    /**
+     * Check status of a nin_modification using Arewa Smart API
+     */
+    public function checkStatus($id)
+    {
+        try {
+            $enrollment = AgentService::findOrFail($id);
+            
+            $apiToken = env('AREWA_API_TOKEN');
+            $baseUrl = env('AREWA_BASE_URL');
+            $endpoint = $baseUrl . '/nin/modification';
+
+            // Identify which identifiers to use for the check
+            // We prioritize reference, then request_id, then ticket_id, then NIN
+            $references = array_filter([
+                $enrollment->reference,
+                $enrollment->request_id,
+                $enrollment->ticket_id,
+            ]);
+
+            $lastError = 'Record not found.';
+            $success = false;
+
+            // Try with reference/request_id/ticket_id first
+            foreach ($references as $ref) {
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $apiToken,
+                    'Accept' => 'application/json',
+                ])->get($endpoint, [
+                    'reference' => $ref,
+                ]);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    if (isset($data['success']) && $data['success'] && isset($data['data'])) {
+                        $this->updateEnrollment($enrollment, $data['data']);
+                        return $this->statusResponse($enrollment, $ref);
+                    }
+                }
+                $lastError = $response->json('message') ?? 'Record not found.';
+            }
+
+            // Fallback to searching by NIN if possible
+            if ($enrollment->nin) {
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $apiToken,
+                    'Accept' => 'application/json',
+                ])->get($endpoint, [
+                    'nin' => $enrollment->nin,
+                ]);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    if (isset($data['success']) && $data['success'] && isset($data['data'])) {
+                        $this->updateEnrollment($enrollment, $data['data']);
+                        return $this->statusResponse($enrollment, $enrollment->nin);
+                    }
+                }
+                $lastError = $response->json('message') ?? $lastError;
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch status from API: ' . $lastError,
+            ], 400);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Helper to update enrollment data
+     */
+    private function updateEnrollment($enrollment, $apiData)
+    {
+        $enrollment->status = $apiData['status'] ?? $enrollment->status;
+        $enrollment->comment = $apiData['reason'] ?? ($apiData['comment'] ?? $enrollment->comment);
+        
+        if (isset($apiData['file_url']) && $apiData['file_url']) {
+            $enrollment->file_url = $apiData['file_url'];
+        }
+        
+        $enrollment->save();
+    }
+
+    /**
+     * Helper to return consistent status response
+     */
+    private function statusResponse($enrollment, $matchedUsing)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Status updated successfully using identifier: ' . $matchedUsing,
+            'data' => [
+                'status' => $enrollment->status,
+                'comment' => $enrollment->comment,
+                'file_url' => $enrollment->file_url,
+                'updated_at' => $enrollment->updated_at->format('M j, Y g:i A')
+            ]
+        ]);
+    }
     /**
      * List nin_modifications with filters and pagination
      */

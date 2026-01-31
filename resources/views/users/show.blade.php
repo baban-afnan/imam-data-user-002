@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Arewa Smart - User Details</title>
+    <title>Imam Data Sub - User Details</title>
 
     <div class="container-fluid px-4 mt-4">
         <!-- Page Header -->

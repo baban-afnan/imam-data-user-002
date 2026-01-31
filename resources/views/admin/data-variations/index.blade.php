@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Smart Link - Data Services Management</title>
+    <title>Imam Data Sub - Data Services Management</title>
 
     <div class="content">
         <!-- Page Header -->

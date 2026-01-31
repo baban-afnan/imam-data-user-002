@@ -1,5 +1,5 @@
 <x-app-layout>
- <title>Smart Link - {{ $title ?? 'Wallet Funding' }}</title>
+ <title>Imam Data Sub</title>
 
     <div class="container-fluid py-4 px-md-4">
         <!-- Page Header -->

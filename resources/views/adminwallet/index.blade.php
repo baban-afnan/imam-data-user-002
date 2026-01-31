@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Smart Idea - Wallet Management</title>
+    <title>Imam Data Sub - Wallet Management</title>
 
     <div class="content">
         {{-- Alerts --}}

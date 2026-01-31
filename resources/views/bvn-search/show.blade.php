@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Arewa Smart - Bvn search details</title>
+    <title>Imam Data Sub - Bvn search details</title>
 
     <div class="content">
         <div class="row mb-4">

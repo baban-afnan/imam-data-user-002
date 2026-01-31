@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">{{ $title ?? 'Profile Settings' }}</x-slot>
+       <title>Imam Data Sub - Services Management</title>
 
     <div class="container-fluid py-4">
         

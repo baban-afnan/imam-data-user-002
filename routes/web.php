@@ -94,6 +94,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             Route::get('/', [\App\Http\Controllers\Agency\BVNmodController::class, 'index'])->name('index');
             Route::get('/{id}', [\App\Http\Controllers\Agency\BVNmodController::class, 'show'])->name('show');
             Route::put('/{id}', [\App\Http\Controllers\Agency\BVNmodController::class, 'update'])->name('update');
+            Route::get('/{id}/check-status', [\App\Http\Controllers\Agency\BVNmodController::class, 'checkStatus'])->name('check-status');
         });
 
         // BVN User
@@ -119,6 +120,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             Route::get('/', [\App\Http\Controllers\Agency\NINmodController::class, 'index'])->name('index');
             Route::get('/{id}', [\App\Http\Controllers\Agency\NINmodController::class, 'show'])->name('show');
             Route::put('/{id}', [\App\Http\Controllers\Agency\NINmodController::class, 'update'])->name('update');
+            Route::get('/{id}/check-status', [\App\Http\Controllers\Agency\NINmodController::class, 'checkStatus'])->name('check-status');
         });
 
         // NIN IPE
@@ -126,6 +128,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             Route::get('/', [\App\Http\Controllers\Agency\NinIpeController::class, 'index'])->name('index');
             Route::get('/{id}', [\App\Http\Controllers\Agency\NinIpeController::class, 'show'])->name('show');
             Route::put('/{id}', [\App\Http\Controllers\Agency\NinIpeController::class, 'update'])->name('update');
+            Route::get('/{id}/check-status', [\App\Http\Controllers\Agency\NinIpeController::class, 'checkStatus'])->name('check-status');
         });
 
         // NIN Personalisation
@@ -140,6 +143,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             Route::get('/', [\App\Http\Controllers\Agency\ValidationController::class, 'index'])->name('index');
             Route::get('/{id}', [\App\Http\Controllers\Agency\ValidationController::class, 'show'])->name('show');
             Route::put('/{id}', [\App\Http\Controllers\Agency\ValidationController::class, 'update'])->name('update');
+            Route::get('/{id}/check-status', [\App\Http\Controllers\Agency\ValidationController::class, 'checkStatus'])->name('check-status');
         });
 
         // BVN Service

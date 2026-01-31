@@ -15,9 +15,92 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class BVNmodController extends Controller
 {
+    /**
+     * Check status of a bvn_modification using Arewa Smart API
+     */
+    public function checkStatus($id)
+    {
+        try {
+            $enrollment = AgentService::findOrFail($id);
+            
+            $apiToken = env('AREWA_API_TOKEN');
+            $baseUrl = env('AREWA_BASE_URL');
+            $endpoint = $baseUrl . '/bvn/modification';
+
+            // Identify which ID to use for the check
+            // We prioritize request_id, then ticket_id, then reference
+            $identifiers = array_filter([
+                $enrollment->request_id,
+                $enrollment->ticket_id,
+                $enrollment->reference
+            ]);
+
+            if (empty($identifiers)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No valid reference found for this record.',
+                ], 400);
+            }
+
+            $lastError = 'Record not found.';
+            
+            foreach ($identifiers as $ref) {
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $apiToken,
+                    'Accept' => 'application/json',
+                ])->get($endpoint, [
+                    'reference' => $ref,
+                ]);
+
+                if ($response->successful()) {
+                    $data = $response->json();
+                    
+                    if (isset($data['success']) && $data['success'] && isset($data['data'])) {
+                        $apiData = $data['data'];
+                        
+                        // Update enrollment
+                        $enrollment->status = $apiData['status'] ?? $enrollment->status;
+                        $enrollment->comment = $apiData['reason'] ?? ($apiData['comment'] ?? $enrollment->comment);
+                        
+                        // Handle file_url if provided
+                        if (isset($apiData['file_url']) && $apiData['file_url']) {
+                            $enrollment->file_url = $apiData['file_url'];
+                        }
+                        
+                        $enrollment->save();
+
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Status updated successfully using reference: ' . $ref,
+                            'data' => [
+                                'status' => $enrollment->status,
+                                'comment' => $enrollment->comment,
+                                'file_url' => $enrollment->file_url,
+                                'updated_at' => $enrollment->updated_at->format('M j, Y g:i A')
+                            ]
+                        ]);
+                    }
+                }
+                
+                $lastError = $response->json('message') ?? 'Record not found.';
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch status from API: ' . $lastError,
+            ], 400);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     /**
      * List bvn_modifications with filters and pagination
      */

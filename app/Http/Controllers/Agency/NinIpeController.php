@@ -15,9 +15,72 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class NinIpeController extends Controller
 {
+    /**
+     * Check status of a nin_ipe request using Arewa Smart API
+     */
+    public function checkStatus($id)
+    {
+        try {
+            $enrollment = AgentService::findOrFail($id);
+            
+            $apiToken = env('AREWA_API_TOKEN');
+            $baseUrl = env('AREWA_BASE_URL');
+            $endpoint = $baseUrl . '/nin/validation'; // Using validation endpoint for IPE/Validation status
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiToken,
+                'Accept' => 'application/json',
+            ])->get($endpoint, [
+                'reference' => $enrollment->reference,
+                'nin' => $enrollment->tracking_id, // For IPE, tracking_id is sent as nin
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                if (isset($data['success']) && $data['success'] && isset($data['data'])) {
+                    $apiData = $data['data'];
+
+                    // Update enrollment
+                    $enrollment->status = $apiData['status'] ?? $enrollment->status;
+                    $enrollment->comment = $apiData['reason'] ?? ($apiData['comment'] ?? $enrollment->comment);
+                    
+                    if (isset($apiData['file_url']) && $apiData['file_url']) {
+                        $enrollment->file_url = $apiData['file_url'];
+                    }
+                    
+                    $enrollment->save();
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Status updated successfully using reference: ' . $enrollment->reference,
+                        'data' => [
+                            'status' => $enrollment->status,
+                            'comment' => $enrollment->comment,
+                            'file_url' => $enrollment->file_url,
+                            'updated_at' => $enrollment->updated_at->format('M j, Y g:i A')
+                        ]
+                    ]);
+                }
+            }
+
+            $lastError = $response->json('message') ?? 'Record not found.';
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch status from API: ' . $lastError,
+            ], 400);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     /**
      * List nin_ipe requests with filters and pagination
      */

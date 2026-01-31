@@ -1,5 +1,5 @@
 <x-app-layout>
-    <title>Arewa Smart - NIN Personalisation details</title>
+    <title>Imam Data Sub - NIN Personalisation details</title>
 
     <div class="content">
         <div class="row mb-4">

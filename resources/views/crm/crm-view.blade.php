@@ -1,5 +1,5 @@
 <x-app-layout>
-  <title>Arewa Smart - CRM Service Details</title>
+  <title>Imam Data Sub - CRM Service Details</title>
 
     <div class="content">
         <div class="row mb-4">

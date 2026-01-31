@@ -3,7 +3,7 @@
     <!-- Logo -->
     <div class="sidebar-logo">
         <a href="{{ route('dashboard') }}" class="logo logo-normal">
-            <img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" style="height: 20px;">
+            <img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" style="height: 50px;">
         </a>
         <a href="{{ route('dashboard') }}" class="logo-small">
             <img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo">

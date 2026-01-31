@@ -1,5 +1,5 @@
 <x-app-layout>
-    @section('title', 'Smart Idea - Fund/Debit User')
+    @section('title', 'Imam Data Sub - Fund/Debit User')
 
     <div class="content">
         {{-- Success Message --}}

@@ -1,5 +1,5 @@
 <x-app-layout>
-   <title>Arewa Smart - BVN Modification</title>
+   <title>Imam Data Sub - BVN Modification</title>
       <div class="page-body">
     <div class="container-fluid">
       <div class="page-title">

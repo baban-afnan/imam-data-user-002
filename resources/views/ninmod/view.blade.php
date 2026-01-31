@@ -14,6 +14,9 @@
                             <a href="{{ route('ninmod.index') }}" class="btn btn-light">
                                 <i class="ti ti-arrow-left me-1"></i> Back to List
                             </a>
+                            <button type="button" class="btn btn-info text-white" id="btn-check-status" data-id="{{ $enrollmentInfo->id }}">
+                                <i class="ti ti-refresh me-1"></i> Check Status
+                            </button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
                                 <i class="ti ti-edit me-1"></i> Update Request
                             </button>
@@ -381,7 +384,6 @@
         </div>
     @endif
 
-    {{-- JavaScript for Auto Messages --}}
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const statusField = document.getElementById("status");
@@ -400,14 +402,65 @@
             };
 
             // Auto update comment when status changes
-            statusField.addEventListener("change", function () {
-                const selectedStatus = statusField.value;
-                if (messages[selectedStatus]) {
-                    commentField.value = messages[selectedStatus];
-                } else {
-                    commentField.value = "";
-                }
-            });
+            if (statusField && commentField) {
+                statusField.addEventListener("change", function () {
+                    const selectedStatus = statusField.value;
+                    if (messages[selectedStatus]) {
+                        commentField.value = messages[selectedStatus];
+                    } else {
+                        commentField.value = "";
+                    }
+                });
+            }
+
+            // AJAX Status Check
+            const btnCheckStatus = document.getElementById("btn-check-status");
+            if (btnCheckStatus) {
+                btnCheckStatus.addEventListener("click", function () {
+                    const id = this.getAttribute("data-id");
+                    
+                    Swal.fire({
+                        title: 'Checking Status...',
+                        text: 'Please wait while we fetch the latest status from Arewa Smart.',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    fetch(`/nin-modification/${id}/check-status`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Status Updated',
+                                    text: data.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: data.message,
+                                    confirmButtonColor: '#3085d6'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'System Error',
+                                text: 'An unexpected error occurred while communicating with the server.',
+                                confirmButtonColor: '#3085d6'
+                            });
+                        });
+                });
+            }
         });
     </script>
 </x-app-layout>

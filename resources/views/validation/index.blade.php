@@ -1,5 +1,5 @@
 <x-app-layout>
- <title>Smart Idea - NIN - Validation</title>
+ <title>Imam Data Sub - NIN - Validation</title>
       <div class="page-body">
     <div class="container-fluid">
       <div class="page-title">

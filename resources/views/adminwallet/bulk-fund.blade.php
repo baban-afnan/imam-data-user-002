@@ -1,5 +1,5 @@
 <x-app-layout>
-    @section('title', 'Smart Idea - Bulk Wallet Action')
+    @section('title', 'Imam Data Sub - Bulk Wallet Action')
 
     <div class="content">
         {{-- Success Message --}}

@@ -2,7 +2,7 @@
     <div class="text-center mb-4">
         <div class="logo-container">
             <div class="logo-badge">
-                <img src="{{ asset('assets/images/logo/logo.png') }}" alt="SmartLink Logo" style="height: 20px;">
+                <img src="{{ asset('assets/images/logo/logo.png') }}" alt="SmartLink Logo" style="height: 50px;">
             </div>
         </div>
         <h2 class="h4 fw-bold text-dark mb-1">Welcome Back</h2>
