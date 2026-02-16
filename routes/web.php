@@ -172,6 +172,13 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::put('/{dataVariation}', [\App\Http\Controllers\Admin\DataVariationController::class, 'update'])->name('update');
         Route::delete('/{dataVariation}', [\App\Http\Controllers\Admin\DataVariationController::class, 'destroy'])->name('destroy');
     });
+
+      // SME Data Management
+    Route::prefix('admin/sme-data')->name('admin.sme-data.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\SmeDataController::class, 'index'])->name('index');
+        Route::post('/sync', [\App\Http\Controllers\Admin\SmeDataController::class, 'sync'])->name('sync');
+        Route::put('/{smeData}/update', [\App\Http\Controllers\Admin\SmeDataController::class, 'update'])->name('update');
+    });
 });
 
     
